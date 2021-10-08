@@ -36,9 +36,11 @@ class AlienInvasion:
 		"""Start the main loop for the game"""
 		while True:
 			self._check_events()
-			self.ship.update()
-			self._update_aliens()
-			self._update_bullets()
+			if self.stats.game_active:
+				self.ship.update()
+				self._update_aliens()
+				self._update_bullets()
+				
 			self._update_screen()
 			
 			
@@ -110,22 +112,37 @@ class AlienInvasion:
 		if pygame.sprite.spritecollideany(self.ship,self.aliens):
 			self._ship_hit()
 			
+		#Look for aliens hitting te bottom of the screen 
+		self._check_aliens_bottom()
+			
 	def _ship_hit(self):
 		"""Respond to ship being hit by the aliens"""
+		if self.stats.ship_left > 0:
+			#Decrement ships left
+			self.stats.ship_left -=1
+			
+			#Get rid of any remaing aliens and bullets
+			self.aliens.empty()
+			self.bullets.empty()
+			
+			#Create new aliens and center the ship
+			self._create_fleet()
+			self.ship.center_ship()
+			
+			#pause
+			sleep(0.5)
+		else:
+			self.stats.game_active = False
+	
+	def _check_aliens_bottom(self):
+		"""Check if the aliens have reached the ground or bottom of the screen"""
+		screen_rect = self.screen.get_rect()
+		for alien in self.aliens.sprites():
+			if alien.rect.bottom >=screen_rect.bottom:
+				#Treat this the same way as when the ship got hit
+				self._ship_hit()
+				break
 		
-		#Decrement ships left
-		self.stats.ship_left -=1
-		
-		#Get rid of any remaing aliens and bullets
-		self.aliens.empty()
-		self.bullets.empty()
-		
-		#Create new aliens and center the ship
-		self._create_fleet()
-		self.ship.center_ship()
-		
-		#pause
-		sleep(0.5)
 	
 	def _check_keyDown_events(self,even):
 		# Respond to key Presses
