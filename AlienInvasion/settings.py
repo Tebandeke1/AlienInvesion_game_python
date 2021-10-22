@@ -18,7 +18,7 @@ class Settings:
 		#ship settings 
 		self.alien_speed = 0.2
 		self.fleet_drop_speed = 60
-		self.ship_limit = 3
+		self.ship_limit = 2
 		
 		#fleet direction 1 represents right and -1 represents left
 		self.fleet_direction = 1

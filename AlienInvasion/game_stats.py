@@ -7,7 +7,9 @@ class GameStats:
 		self.reset_stats()
 		
 		#Start an alien version in an active state
-		self.game_active = True
+		
+		"""Start game in an inactive state"""
+		self.game_active = False
 		
 	def reset_stats(self):
 		"""Initialize statistics that can change during the game"""
