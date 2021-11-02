@@ -93,6 +93,11 @@ class AlienInvasion:
 			for aliens in collisions.values():
 				self.stats.score += self.settings.alien_points *len(aliens)
 			self.sb.prep_score()
+			self.sb.check_high_scores()
+			
+			#Increas ethe level
+			self.stats.level += 1
+			self.sb.prepare_level()
 			
 		
 		if not self.aliens:
@@ -126,6 +131,12 @@ class AlienInvasion:
 			self.stats.game_active = True 
 			self.sb.prep_score()
 			
+			#This below is the method to update the level
+			self.sb.prepare_level()
+			
+			#This bellow is a function to update and show ships remaining
+			self.sb.prep_ships()
+			
 			#Get rid of any remaining alliens and bullets 
 			self.aliens.empty()
 			self.bullets.empty()
@@ -158,8 +169,10 @@ class AlienInvasion:
 	def _ship_hit(self):
 		"""Respond to ship being hit by the aliens"""
 		if self.stats.ship_left > 0:
-			#Decrement ships left
+			#Decrement ships left and display the remaining 
 			self.stats.ship_left -=1
+			
+			self.sb.prep_ships()
 			
 			#Get rid of any remaing aliens and bullets
 			self.aliens.empty()

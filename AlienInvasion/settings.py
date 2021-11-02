@@ -9,13 +9,13 @@ class Settings:
 		self.bg_color = (230,230,230)
 		
 		#Bullet settings
-		self.bullet_width = 3
+		self.bullet_width = 300
 		self.bullet_height = 15
 		self.bullet_color = (60,60,60)
 		self.bullets_allowed = 3
 		
 		#ship settings 
-		self.ship_limit = 2
+		self.ship_limit = 3
 		
 		#Fleet drop speed 
 		self.fleet_drop_speed = 2
